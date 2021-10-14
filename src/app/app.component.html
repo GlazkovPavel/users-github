@@ -1,15 +1,24 @@
 <div class="main">
   <div class="input-container">
-    <input class="input" type="text" placeholder="Имя пользователя...">
-    <button class="btn">Найти</button>
+    <input class="input" type="text" placeholder="Имя пользователя..." [(ngModel)]="search" >
+    <button class="btn" (click)="onSearch()">Найти</button>
   </div>
-  <div class="user">
-    <div class="user__foto-container">
-      <img src="https://klkfavorit.ru/wp-content/uploads/9/e/6/9e63c8436ff97c485da4c3b93d84cb62.jpeg" alt="" class="user__foto">
-    </div>
-    <div class="user__profile">
-      <h2 class="user__name">Lorem ipsum dolor sit amet.</h2>
-      <a class="user__link">link</a>
-    </div>
+
+  <div *ngIf="users.length; else notFound">
+    <div class="user" *ngFor="let user of users">
+      <div class="user__foto-container" >
+        <a href="{{user.html_url}}" target="_blank">
+          <img src="{{user.avatar_url}}" alt="" class="user__foto" (click)="onClickFoto()">
+        </a>
+      </div>
+      <div class="user__profile">
+        <h2 class="user__name">{{user.login | titlecase}}</h2>
+        <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
+      </div>
   </div>
+  </div>
+  <ng-template #notFound>
+    <p>По данному запросу ничего не найдено</p>
+  </ng-template>
+
 </div>
