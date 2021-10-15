@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {token} from "../utils/utils";
+import {SearchService, User} from "./search.service";
 
-export interface User {
-  login: string,
-  html_url: string,
-  avatar_url: string
-}
+
 
 @Component({
   selector: 'app-root',
@@ -18,12 +15,12 @@ export interface User {
 export class AppComponent implements OnInit{
 
   users: User[] = []
-
   search = ''
+  loading = false
+  error = ''
 
 
-
-  constructor(private http: HttpClient) {
+  constructor(private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -40,27 +37,22 @@ export class AppComponent implements OnInit{
   }
 
   onSearch() {
+    this.loading = true
     if (!this.search.trim()) {
       return
     }
       const newSearch: any = this.search
-      this.http.get<any>(`https://api.github.com/search/users?q=${newSearch}&per_page=10`, {
-        headers: new HttpHeaders({
-          'Accept': 'application/vnd.github.v3+json',
-          'Authorization' : `token ${token}`
-        })
-      })
+      this.searchService.onSearch(newSearch)
         .subscribe(
           users => {
             console.log('response', users)
             this.users = users.items
             this.search = ''
-
+            this.loading = false
+          }, error => {
+            this.error = error.message
           }
         )
   }
 
-  onClickFoto() {
-
-  }
 }

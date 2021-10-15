@@ -4,21 +4,34 @@
     <button class="btn" (click)="onSearch()">Найти</button>
   </div>
 
-  <div *ngIf="users.length; else notFound">
-    <div class="user" *ngFor="let user of users">
-      <div class="user__foto-container" >
-        <a href="{{user.html_url}}" target="_blank">
-          <img src="{{user.avatar_url}}" alt="" class="user__foto" (click)="onClickFoto()">
-        </a>
+  <p *ngIf="error; else mainBlock" class="error">{{error}}</p>
+
+  <ng-template #mainBlock>
+    <div *ngIf="!loading; else loadingBlock" #mainBlock>
+      <div *ngIf="users.length; else notFound">
+        <div class="user" *ngFor="let user of users">
+          <div class="user__foto-container" >
+            <a href="{{user.html_url}}" target="_blank">
+              <img src="{{user.avatar_url}}" alt="" class="user__foto" >
+            </a>
+          </div>
+          <div class="user__profile">
+            <h2 class="user__name">{{user.login | titlecase}}</h2>
+            <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
+          </div>
+        </div>
       </div>
-      <div class="user__profile">
-        <h2 class="user__name">{{user.login | titlecase}}</h2>
-        <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
-      </div>
-  </div>
-  </div>
-  <ng-template #notFound>
-    <p>По данному запросу ничего не найдено</p>
+    </div>
+    <ng-template #notFound>
+      <p>По данному запросу ничего не найдено</p>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #loadingBlock>
+    <p>Загрузка....</p>
   </ng-template>
 
 </div>
+
+<app-pagination></app-pagination>
+
