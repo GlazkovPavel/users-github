@@ -5,7 +5,8 @@ import {token} from "../utils/utils";
 export interface User {
   login: string,
   html_url: string,
-  avatar_url: string
+  avatar_url: string,
+  total_count: number
 }
 
 @Injectable({
@@ -15,10 +16,11 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  onSearch(newSearch: string){
+  onSearch(newSearch: any, per_page: number, page: number){
     let params = new HttpParams()
     params = params.append('q', `${newSearch}`)
-    params = params.append('per_page', '10')
+    params = params.append('per_page', `${per_page}`)
+    params = params.append('page', `${page}`)
    return this.http.get<any>('https://api.github.com/search/users', {
      params,
      headers: new HttpHeaders({
