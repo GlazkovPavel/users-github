@@ -9,11 +9,7 @@
   <ng-template #mainBlock>
     <div *ngIf="!loading; else loadingBlock" >
       <div *ngIf="users.length; else notFound">
-        <div class="user" *ngFor="let user of users | paginate : {
-          itemsPerPage: per_page,
-          currentPage: page,
-          totalItems: total_count
-        }">
+        <div class="user" *ngFor="let user of users ">
           <div class="user__foto-container" >
             <a href="{{user.html_url}}" target="_blank">
               <img src="{{user.avatar_url}}" alt="" class="user__foto" >
@@ -25,12 +21,10 @@
           </div>
         </div>
         <div class="pagination">
-          <pagination-controls
-            (pageChange)="pageChanged($event)"
-            previousLabel="Previous"
-            nextLabel="Next"
-
-          ></pagination-controls>
+<!--          <pagination-controls-->
+<!--            (pageChange)="pageChanged($event)"-->
+<!--            previousLabel="Previous"-->
+<!--          ></pagination-controls>-->
 
         </div>
 
@@ -46,4 +40,11 @@
   </ng-template>
 
 </div>
+
+
+  <div class="pagination">
+    <span *ngFor="let pagination of pages" class="pagination__page" (click)="pageChanged($event)">{{pagination}}</span>
+  </div>
+
+
 

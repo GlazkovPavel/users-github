@@ -9,6 +9,9 @@ import {AppComponent} from "../app.component";
   styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent {
+  // constructor(pages: number, pagesCount: number, page: number) {
+
+  // }
 
 
 
