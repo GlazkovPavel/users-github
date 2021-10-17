@@ -6,11 +6,13 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxPaginationModule} from 'ngx-pagination';
 import { OnMeComponent } from './on-me/on-me.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OnMeComponent
+    OnMeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

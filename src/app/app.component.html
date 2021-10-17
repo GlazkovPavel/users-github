@@ -1,10 +1,17 @@
 <div class="main">
   <div class="input-container">
-    <input class="input" type="text" placeholder="Имя пользователя..." [(ngModel)]="search" >
+    <input
+      class="input"
+      type="text"
+      placeholder="Имя пользователя..."
+      [(ngModel)]="search"
+      autofocus="autofocus"
+    >
     <button class="btn" (click)="onSearch()" >Найти</button>
   </div>
 
-  <p *ngIf="error; else mainBlock" class="error">{{error}}</p>
+  <p *ngIf="error; else mainBlock" class="error">Упс, произошла ошибка: {{error}}
+  </p>
 
   <ng-template #mainBlock>
     <div *ngIf="!loading; else loadingBlock" >
@@ -34,7 +41,8 @@
   <app-on-me [hidden]="!meBlock || noUsers"></app-on-me>
 
   <div [hidden]="!noUsers">
-    <p>По данному запросу ничего не найдено</p>
+    <p class="notFoundText">Упс, по данному запросу ничего не найдено</p>
+    <app-not-found></app-not-found>
   </div>
 
 </div>

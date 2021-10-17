@@ -158,7 +158,9 @@ input{
 hr {
   margin: .5rem 0;
 }
-.loading{
+.loading,
+.notFoundText,
+.error{
   display: flex;
   justify-content: center;
   font-style: normal;
