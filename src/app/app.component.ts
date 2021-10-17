@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchService, User} from "./search.service";
-import {PaginationService} from "./pagination.service";
 
 
 @Component({
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit{
   pages = []
 
 
-  constructor(private searchService: SearchService, private paginationService: PaginationService ) {
+  constructor(private searchService: SearchService ) {
   }
 
   ngOnInit() {
@@ -41,7 +40,6 @@ export class AppComponent implements OnInit{
             console.log('response', users)
             this.users = users.items
             this.total_count = users.total_count
-            this.paginationService.createPages(this.pages, this.total_count, this.page)
             this.loading = false
           }, error => {
             this.error = error.message
@@ -51,7 +49,7 @@ export class AppComponent implements OnInit{
 
 
   pageChanged(event: any) {
-    this.page = event.currentTarget.innerHTML;
+    this.page = event;
     this.onSearch()
   }
 

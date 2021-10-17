@@ -4,13 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { PaginationComponent } from './pagination/pagination.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PaginationComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
