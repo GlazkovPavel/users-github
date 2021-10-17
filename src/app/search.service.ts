@@ -28,7 +28,16 @@ export class SearchService {
         'Authorization' : `token ${token}`
       })
     })
+  }
 
+  onMe(){
+    const username = 'glazkovpavel'
+    return this.http.get<any>(`https://api.github.com/users/${username}`, {
+      headers: new HttpHeaders({
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization' : `token ${token}`
+      })
+    })
   }
 
 }

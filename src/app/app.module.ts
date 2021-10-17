@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxPaginationModule} from 'ngx-pagination';
+import { OnMeComponent } from './on-me/on-me.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OnMeComponent
   ],
   imports: [
     BrowserModule,
