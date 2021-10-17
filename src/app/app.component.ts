@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   meBlock = false
   total_count: any;
   per_page: number = 10;
-  page: any;
+  page: any = 1;
   error = ''
   pages = []
   noUsers = false
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.loading = true
     this.noUsers = false
+    this.error = ''
     this.searchService.onMe()
       .subscribe((
         meInfo => {
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit{
   }
 
   onSearch() {
+    this.error = ''
     this.loading = true
     if (!this.search.trim()) {
       this.ngOnInit()
@@ -65,6 +67,7 @@ export class AppComponent implements OnInit{
             }
           }, error => {
             this.error = error.message
+            this.page = ''
           }
         )
     }
