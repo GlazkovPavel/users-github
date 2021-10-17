@@ -24,18 +24,12 @@
             <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
           </div>
         </div>
-        <div class="pagination" [hidden]="!meBlock && noUsers || meBlock || noUsers">
-          <pagination-controls
-            (pageChange)="pageChanged($event)"
-            previousLabel="Previous"
-          ></pagination-controls>
-        </div>
-        </div>
+      </div>
     </div>
 
   </ng-template>
-  <ng-template  #loadingBlock>
-    <p>Загрузка....</p>
+  <ng-template   #loadingBlock>
+    <p class="loading">Загрузка....</p>
   </ng-template>
   <app-on-me [hidden]="!meBlock || noUsers"></app-on-me>
 
@@ -43,6 +37,13 @@
     <p>По данному запросу ничего не найдено</p>
   </div>
 
+</div>
+
+<div class="pagination" [hidden]="!meBlock && noUsers || meBlock || noUsers">
+  <pagination-controls
+    (pageChange)="pageChanged($event)"
+    previousLabel="Previous"
+  ></pagination-controls>
 </div>
 
 

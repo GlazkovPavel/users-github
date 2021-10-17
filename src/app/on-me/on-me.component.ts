@@ -8,7 +8,9 @@ import {SearchService} from "../search.service";
 })
 export class OnMeComponent implements OnInit {
 
-  myName = ''
+  login = ''
+  avatar = ''
+  link = ''
 
   constructor(private searchService: SearchService) { }
 
@@ -17,7 +19,9 @@ export class OnMeComponent implements OnInit {
       .subscribe((
         meInfo => {
           console.log('meInfo', meInfo)
-          this.myName = meInfo.login
+          this.login = meInfo.name
+          this.avatar = meInfo.avatar_url
+          this.link = meInfo.html_url
         }
       ))
   }

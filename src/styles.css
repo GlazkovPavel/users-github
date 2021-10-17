@@ -21,7 +21,7 @@ body {
   padding: 50px 5px 10px;
   border: 1px solid #333333;
   border-radius: 5px;
-  height: 90vh;
+  height: 85vh;
   overflow-y: auto;
 }
 
@@ -123,66 +123,30 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
 }
+.btn:hover {
+  opacity: 0.8;
+}
 
 .pagination{
   position: relative;
   justify-content: center;
   margin: 40px auto 5px;
   max-width: 700px;
-  border: 1px solid #333333;
   border-radius: 3px;
   padding: .5rem;
 
-
 }
-
-
-.btn-disabled {
-   background: #ccc;
-   color: #000;
-   cursor: not-allowed;
- }
 
 .pagination{
   margin: 10px auto;
   text-align: center;
 }
 
-.btn:hover {
-  opacity: 0.8;
-}
-
-.form-control {
-  display: block;
-  margin-top: 0.3rem;
-  margin-bottom: .5rem;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: .5rem;
-}
-
-input {
-  margin-bottom: 0;
-}
-
 .validation {
   color: red;
 }
 
-
-.card {
-  padding: 1rem;
-  border: #ccc 1px dotted;
-  margin: 0.7rem 0;
-}
-
-input,
-select,
-textarea {
+input{
   display: block;
   width: 100%;
   padding: 0.4rem;
@@ -194,4 +158,14 @@ textarea {
 hr {
   margin: .5rem 0;
 }
+.loading{
+  display: flex;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
+  padding: 2rem;
+}
+
 
