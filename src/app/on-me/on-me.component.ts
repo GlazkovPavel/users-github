@@ -18,7 +18,6 @@ export class OnMeComponent implements OnInit {
     this.searchService.onMe()
       .subscribe((
         meInfo => {
-          console.log('meInfo', meInfo)
           this.login = meInfo.name
           this.avatar = meInfo.avatar_url
           this.link = meInfo.html_url

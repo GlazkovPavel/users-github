@@ -28,6 +28,8 @@ body {
 .input-container{
   display: flex;
   flex-direction: row;
+  max-width: 880px;
+  margin: 0 auto;
 }
 .input{
   margin-right: 5px;

@@ -32,7 +32,6 @@ export class AppComponent implements OnInit{
     this.searchService.onMe()
       .subscribe((
         meInfo => {
-          console.log('meInfo', meInfo)
           this.meBlock = true
           this.loading = false
           this.users = []
@@ -58,7 +57,6 @@ export class AppComponent implements OnInit{
               this.users = users.items
               this.total_count = users.total_count
             } else {
-              console.log('response', users)
               this.users = users.items
               this.total_count = users.total_count
               this.meBlock = false
