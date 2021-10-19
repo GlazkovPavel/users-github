@@ -1,28 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {SearchService} from "../search.service";
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-on-me',
   templateUrl: './on-me.component.html',
-  styleUrls: ['./on-me.component.css']
+  styleUrls: ['./on-me.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OnMeComponent implements OnInit {
+export class OnMeComponent {
 
-  login = ''
-  avatar = ''
-  link = ''
+  @Input() login = ''
+  @Input() avatar = ''
+  @Input() link = ''
 
-  constructor(private searchService: SearchService) { }
 
-  ngOnInit(): void {
-    this.searchService.onMe()
-      .subscribe((
-        meInfo => {
-          this.login = meInfo.name
-          this.avatar = meInfo.avatar_url
-          this.link = meInfo.html_url
-        }
-      ))
-  }
 
 }

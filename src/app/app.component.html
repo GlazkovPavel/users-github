@@ -19,7 +19,7 @@
   <ng-template   #loadingBlock>
     <p class="loading">Загрузка....</p>
   </ng-template>
-  <app-on-me [hidden]="!meBlock || noUsers"></app-on-me>
+  <app-on-me [avatar]="avatar" [link]="link" [login]="login" [hidden]="!meBlock || noUsers"></app-on-me>
 
   <div [hidden]="!noUsers">
     <p class="notFoundText">Упс, по данному запросу ничего не найдено</p>

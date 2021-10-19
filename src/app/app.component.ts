@@ -20,6 +20,9 @@ export class AppComponent implements OnInit{
   error = ''
   pages = []
   noUsers = false
+  login = ''
+  avatar = ''
+  link = ''
 
 
   constructor(private searchService: SearchService ) {
@@ -32,6 +35,9 @@ export class AppComponent implements OnInit{
     this.searchService.onMe()
       .subscribe((
         meInfo => {
+          this.login = meInfo.name
+          this.avatar = meInfo.avatar_url
+          this.link = meInfo.html_url
           this.meBlock = true
           this.loading = false
           this.users = []
