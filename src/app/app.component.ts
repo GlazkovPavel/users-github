@@ -77,5 +77,9 @@ export class AppComponent implements OnInit{
     this.onSearch()
   }
 
+  onClickSearch(search: string) {
+    this.search = search
+    this.onSearch()
+  }
 }
 

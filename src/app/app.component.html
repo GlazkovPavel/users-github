@@ -1,37 +1,17 @@
 
-<div class="input-container">
-  <input
-    class="input"
-    type="text"
-    placeholder="Имя пользователя..."
-    [(ngModel)]="search"
-    autofocus="autofocus"
-  >
-  <button class="btn" (click)="onSearch()" >Найти</button>
-</div>
+<app-search (onClick)="onClickSearch($event)"></app-search>
 <div class="main">
 
-  <p *ngIf="error; else mainBlock" class="error">Упс, произошла ошибка: {{error}}
-  </p>
+  <p *ngIf="error; else mainBlock" class="error">Упс, произошла ошибка: {{error}}</p>
 
   <ng-template #mainBlock>
     <div *ngIf="!loading; else loadingBlock" >
-      <div>
-        <div class="user" *ngFor="let user of users | paginate : {
+      <div *ngFor="let user of users | paginate : {
           itemsPerPage: per_page,
           currentPage: page,
           totalItems: total_count
         }">
-          <div class="user__foto-container" >
-            <a href="{{user.html_url}}" target="_blank">
-              <img src="{{user.avatar_url}}" alt="" class="user__foto" >
-            </a>
-          </div>
-          <div class="user__profile">
-            <h2 class="user__name">{{user.login | titlecase}}</h2>
-            <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
-          </div>
-        </div>
+        <app-user [user]="user"></app-user>
       </div>
     </div>
 
@@ -51,7 +31,6 @@
 <div class="pagination" [hidden]="!meBlock && noUsers || meBlock || noUsers">
   <pagination-controls
     (pageChange)="pageChanged($event)"
-    previousLabel="Previous"
   ></pagination-controls>
 </div>
 
