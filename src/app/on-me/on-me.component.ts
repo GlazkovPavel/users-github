@@ -1,17 +1,25 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
+import {IMyInfo, SearchService} from "../search.service";
 
 @Component({
   selector: 'app-on-me',
   templateUrl: './on-me.component.html',
   styleUrls: ['./on-me.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OnMeComponent {
 
-  @Input() login = ''
-  @Input() avatar = ''
-  @Input() link = ''
+export class OnMeComponent implements OnInit {
+
+  // @ts-ignore
+  @Input myInfo: IMyInfo
 
 
+
+  constructor(private searchService: SearchService) { }
+
+
+  ngOnInit(): void {
+
+
+  }
 
 }

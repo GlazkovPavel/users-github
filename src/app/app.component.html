@@ -5,7 +5,7 @@
   <p *ngIf="error; else mainBlock" class="error">Упс, произошла ошибка: {{error}}</p>
 
   <ng-template #mainBlock>
-    <div *ngIf="!loading; else loadingBlock" >
+    <div *ngIf="!loading; else loadingBlock">
       <div *ngFor="let user of users | paginate : {
           itemsPerPage: per_page,
           currentPage: page,
@@ -19,7 +19,8 @@
   <ng-template   #loadingBlock>
     <p class="loading">Загрузка....</p>
   </ng-template>
-  <app-on-me [avatar]="avatar" [link]="link" [login]="login" [hidden]="!meBlock || noUsers"></app-on-me>
+
+  <app-on-me [myInfo]="myInfo$ | async"[hidden]="!meBlock || noUsers"></app-on-me>
 
   <div [hidden]="!noUsers">
     <p class="notFoundText">Упс, по данному запросу ничего не найдено</p>

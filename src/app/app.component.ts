@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchService, User} from "./search.service";
+import {IMyInfo, IPagination, SearchService, User} from "./search.service";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -11,19 +12,19 @@ import {SearchService, User} from "./search.service";
 export class AppComponent implements OnInit{
 
   users: User[] = []
-  search: any;
+  pagination: IPagination[] = []
   loading = false
   meBlock = false
   total_count: any;
+  search = ''
   per_page: number = 10;
   page: any = 1;
   error = ''
-  pages = []
+  pages: any = []
   noUsers = false
-  login = ''
-  avatar = ''
-  link = ''
 
+  // @ts-ignore
+  myInfo$: Observable<IMyInfo> = []
 
   constructor(private searchService: SearchService ) {
   }
@@ -32,17 +33,11 @@ export class AppComponent implements OnInit{
     this.loading = true
     this.noUsers = false
     this.error = ''
-    this.searchService.onMe()
-      .subscribe((
-        meInfo => {
-          this.login = meInfo.name
-          this.avatar = meInfo.avatar_url
-          this.link = meInfo.html_url
-          this.meBlock = true
-          this.loading = false
-          this.users = []
-        }
-      ))
+    this.myInfo$ = this.searchService.onMe()
+    this.meBlock = true
+    this.loading = false
+    this.users = []
+
   }
 
   onSearch() {

@@ -9,8 +9,7 @@ import {User} from "../search.service";
 })
 export class UserComponent  {
 
-  // @ts-ignore
-  @Input() user: User;
+  @Input() user: User
 
 
 

@@ -1,14 +1,14 @@
 <div class="myInfo">
   <div class="myInfo__foto-container" >
-    <a href="{{ link }}" target="_blank">
-      <img src="{{avatar}}" alt="" class="user__foto" >
+    <a href="{{ myInfo.html_url }}" target="_blank">
+      <img src="{{myInfo.avatar_url }}" alt="" class="user__foto" >
     </a>
   </div>
   <div class="myInfo__profile">
     <h2 class="myInfo__name">
-      Hi! I'm {{login | titlecase}}, I made this application to search for users on Github. Just enter the username.
+      Hi! I'm {{myInfo.name | titlecase}}, I made this application to search for users on Github. Just enter the username.
       </h2>
     <p>Link to my github 	&#11015;</p>
-    <a href="{{link}}" target="_blank" class="myInfo__link">{{link}}</a>
+    <a href="{{myInfo.html_url}}" target="_blank" class="myInfo__link">{{myInfo.html_url}}</a>
   </div>
 </div>
