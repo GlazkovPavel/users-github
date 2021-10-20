@@ -20,7 +20,7 @@
     <p class="loading">Загрузка....</p>
   </ng-template>
 
-  <app-on-me [myInfo]="myInfo$ | async"[hidden]="!meBlock || noUsers"></app-on-me>
+  <app-on-me [myInfo]="myInfo$ | async" [hidden]="!meBlock || noUsers"></app-on-me>
 
   <div [hidden]="!noUsers">
     <p class="notFoundText">Упс, по данному запросу ничего не найдено</p>
