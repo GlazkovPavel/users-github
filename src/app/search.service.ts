@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {token} from "../utils/utils";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
 
 export interface User {
+  items: User[];
   login: string,
   html_url: string,
   avatar_url: string,
-  total_count: number
+  total_count: number,
+  error: string
 }
 
 export interface IPagination {
@@ -26,23 +29,40 @@ export interface IMyInfo {
 @Injectable({
   providedIn: 'root'
 })
+
 export class SearchService {
+  public err: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
 
-  onSearch(newSearch: string, per_page: number, page: number): Observable<any> {
+  }
+
+  onError(){
+    return this.err
+  }
+
+  onSearch(newSearch: string, per_page: number, page: number): Observable<User> {
     let params = new HttpParams()
     params = params.append('q', `${newSearch}`)
     params = params.append('per_page', `${per_page}`)
     params = params.append('page', `${page}`)
-   return this.http.get<User>('https://api.github.com/search/users', {
+   // @ts-ignore
+    return this.http.get<User>('https://api.github.com/search/users', {
      params,
      headers: new HttpHeaders({
         'Accept': 'application/vnd.github.v3+json',
         'Authorization' : `token ${token}`
       })
-    })
+    }).pipe(map((users: User) => {
+      return { ...users
+      }
+    }), catchError((err) => {
+      return this.err = err.message
+      }
+    ))
   }
+
+
 
   onMe(): Observable<IMyInfo>{
     const username = 'glazkovpavel'

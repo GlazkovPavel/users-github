@@ -11,64 +11,48 @@ import {Observable} from "rxjs";
 
 export class AppComponent implements OnInit{
 
-  users: User[] = []
+  // @ts-ignore
+  users$: Observable<User>
   pagination: IPagination[] = []
-  loading = false
   meBlock = false
   total_count: any;
   search = ''
   per_page: number = 10;
   page: any = 1;
-  error = ''
   pages: any = []
   noUsers = false
+  isLoaded = false
+  error = ''
 
   // @ts-ignore
-  myInfo$: Observable<IMyInfo> = []
+  myInfo$: Observable<IMyInfo>
+
 
   constructor(private searchService: SearchService ) {
   }
 
   ngOnInit() {
-    this.loading = true
+    this.isLoaded = false
     this.noUsers = false
-    this.error = ''
+    this.error = this.searchService.onError()
     this.myInfo$ = this.searchService.onMe()
     this.meBlock = true
-    this.loading = false
-    this.users = []
 
   }
 
   onSearch() {
+    this.isLoaded = true
     this.error = ''
-    this.loading = true
     if (!this.search.trim()) {
       this.ngOnInit()
     } else {
       const newSearch: any = this.search
       const per_page: number = this.per_page
       const page: number = this.page
-      this.searchService.onSearch(newSearch, per_page, page)
-        .subscribe(
-          (users) => {
-            if(users.total_count === 0){
-              this.noUsers = true
-              this.loading = false
-              this.users = users.items
-              this.total_count = users.total_count
-            } else {
-              this.users = users.items
-              this.total_count = users.total_count
-              this.meBlock = false
-              this.loading = false
-              this.noUsers = false
-            }
-          }, error => {
-            this.error = error.message
-            this.page = ''
-          }
-        )
+      this.meBlock = false
+      this.noUsers = false
+      this.users$ = this.searchService.onSearch(newSearch, per_page, page)
+
     }
 
   }
@@ -79,8 +63,15 @@ export class AppComponent implements OnInit{
   }
 
   onClickSearch(search: string) {
-    this.search = search
-    this.onSearch()
+    if(search === this.search){
+      this.search = search
+      this.onSearch()
+    } else {
+      this.search = search
+      this.page = 1
+      this.onSearch()
+    }
+
   }
 }
 

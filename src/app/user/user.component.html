@@ -1,4 +1,4 @@
-<div class="user" >
+<div class="user" *ngIf="user">
   <div class="user__foto-container">
     <a href="{{user.html_url}}" target="_blank">
       <img src="{{user.avatar_url}}" alt="" class="user__foto" >
@@ -9,3 +9,4 @@
     <a href="{{user.html_url}}" target="_blank" class="user__link">{{user.html_url}}</a>
   </div>
 </div>
+

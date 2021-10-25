@@ -1,39 +1,46 @@
 
 <app-search (onClick)="onClickSearch($event)"></app-search>
 <div class="main">
+  <div *ngIf="myInfo$ | async as myInfo; else loadingBlock">
+    <app-on-me [myInfo]="myInfo" [hidden]="!meBlock"></app-on-me>
+  </div>
 
-  <p *ngIf="error; else mainBlock" class="error">Упс, произошла ошибка: {{error}}</p>
+  <p *ngIf="error" class="error">Упс, произошла ошибка: {{error}}
+  </p>
 
-  <ng-template #mainBlock>
-    <div *ngIf="!loading; else loadingBlock">
-      <div *ngFor="let user of users | paginate : {
+
+  <div *ngIf="isLoaded">
+      <div *ngIf="users$ | async as users; else loadingBlock" [hidden]="meBlock">
+        <div *ngIf="users.total_count === 0">
+          <p class="notFoundText" >Упс, по данному запросу ничего не найдено</p>
+          <app-not-found></app-not-found>
+        </div>
+        <div *ngFor="let user of users.items | paginate : {
           itemsPerPage: per_page,
           currentPage: page,
-          totalItems: total_count
+          totalItems: users.total_count
         }">
-        <app-user [user]="user"></app-user>
+            <app-user [user]="user"></app-user>
+        </div>
       </div>
-    </div>
 
-  </ng-template>
-  <ng-template   #loadingBlock>
+  </div>
+
+  <ng-template #loadingBlock>
     <p class="loading">Загрузка....</p>
   </ng-template>
 
-  <app-on-me [myInfo]="myInfo$ | async" [hidden]="!meBlock || noUsers"></app-on-me>
 
-  <div [hidden]="!noUsers">
-    <p class="notFoundText">Упс, по данному запросу ничего не найдено</p>
-    <app-not-found></app-not-found>
+</div>
+
+<div *ngIf="users$ | async as users">
+  <div *ngIf="users.total_count !== 0" class="pagination" [hidden]="meBlock">
+    <pagination-controls
+      (pageChange)="pageChanged($event)"
+    ></pagination-controls>
   </div>
-
 </div>
 
-<div class="pagination" [hidden]="!meBlock && noUsers || meBlock || noUsers">
-  <pagination-controls
-    (pageChange)="pageChanged($event)"
-  ></pagination-controls>
-</div>
 
 
 
