@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {IMyInfo, IPagination, SearchService, User} from "./search.service";
+import { IMyInfo, SearchService, User} from "./search.service";
 import {Observable} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 
 @Component({
@@ -11,38 +12,27 @@ import {Observable} from "rxjs";
 
 export class AppComponent implements OnInit{
 
-  // @ts-ignore
   users$: Observable<User>
-  pagination: IPagination[] = []
+  myInfo$: Observable<IMyInfo>
   meBlock = false
-  total_count: any;
   search = ''
   per_page: number = 10;
   page: any = 1;
   pages: any = []
-  noUsers = false
   isLoaded = false
-  error = ''
+  myError = ''
 
-  // @ts-ignore
-  myInfo$: Observable<IMyInfo>
-
-
-  constructor(private searchService: SearchService ) {
-  }
+  constructor(public searchService: SearchService ) {}
 
   ngOnInit() {
     this.isLoaded = false
-    this.noUsers = false
-    this.error = this.searchService.onError()
     this.myInfo$ = this.searchService.onMe()
     this.meBlock = true
-
+    localStorage.getItem('search')
   }
 
   onSearch() {
     this.isLoaded = true
-    this.error = ''
     if (!this.search.trim()) {
       this.ngOnInit()
     } else {
@@ -50,11 +40,11 @@ export class AppComponent implements OnInit{
       const per_page: number = this.per_page
       const page: number = this.page
       this.meBlock = false
-      this.noUsers = false
       this.users$ = this.searchService.onSearch(newSearch, per_page, page)
-
+        .pipe(catchError(err => {
+          return this.myError = err.message;
+        }))
     }
-
   }
 
   pageChanged(event: any) {
@@ -63,6 +53,8 @@ export class AppComponent implements OnInit{
   }
 
   onClickSearch(search: string) {
+    this.myError = ''
+    localStorage.setItem('search', search)
     if(search === this.search){
       this.search = search
       this.onSearch()
@@ -71,7 +63,6 @@ export class AppComponent implements OnInit{
       this.page = 1
       this.onSearch()
     }
-
   }
 }
 

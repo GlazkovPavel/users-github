@@ -1,23 +1,15 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {token} from "../utils/utils";
-import {Observable, throwError} from "rxjs";
-import {catchError, map} from "rxjs/operators";
-import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 export interface User {
   items: User[];
   login: string,
   html_url: string,
   avatar_url: string,
-  total_count: number,
-  error: string
-}
-
-export interface IPagination {
-  newSearch: string,
-  per_page: number,
-  page: number
+  total_count: number
 }
 
 export interface IMyInfo {
@@ -31,22 +23,14 @@ export interface IMyInfo {
 })
 
 export class SearchService {
-  public err: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
 
-  }
-
-  onError(){
-    return this.err
-  }
-
-  onSearch(newSearch: string, per_page: number, page: number): Observable<User> {
+  onSearch(newSearch: string, per_page: number, page: number): Observable<any> {
     let params = new HttpParams()
     params = params.append('q', `${newSearch}`)
     params = params.append('per_page', `${per_page}`)
     params = params.append('page', `${page}`)
-   // @ts-ignore
     return this.http.get<User>('https://api.github.com/search/users', {
      params,
      headers: new HttpHeaders({
@@ -56,13 +40,8 @@ export class SearchService {
     }).pipe(map((users: User) => {
       return { ...users
       }
-    }), catchError((err) => {
-      return this.err = err.message
-      }
-    ))
+    }))
   }
-
-
 
   onMe(): Observable<IMyInfo>{
     const username = 'glazkovpavel'
@@ -77,5 +56,5 @@ export class SearchService {
     }))
 
   }
-
 }
+

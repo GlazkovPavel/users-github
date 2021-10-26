@@ -1,13 +1,14 @@
-
 <app-search (onClick)="onClickSearch($event)"></app-search>
+
 <div class="main">
+
+  <div *ngIf="myError" >
+      <p  class="error" >Упс, произошла ошибка: {{ myError }} </p>
+  </div>
+
   <div *ngIf="myInfo$ | async as myInfo; else loadingBlock">
     <app-on-me [myInfo]="myInfo" [hidden]="!meBlock"></app-on-me>
   </div>
-
-  <p *ngIf="error" class="error">Упс, произошла ошибка: {{error}}
-  </p>
-
 
   <div *ngIf="isLoaded">
       <div *ngIf="users$ | async as users; else loadingBlock" [hidden]="meBlock">
@@ -23,18 +24,16 @@
             <app-user [user]="user"></app-user>
         </div>
       </div>
-
   </div>
 
   <ng-template #loadingBlock>
     <p class="loading">Загрузка....</p>
   </ng-template>
 
-
 </div>
 
 <div *ngIf="users$ | async as users">
-  <div *ngIf="users.total_count !== 0" class="pagination" [hidden]="meBlock">
+  <div *ngIf="users.total_count !== 0" class="pagination" [hidden]="meBlock || myError">
     <pagination-controls
       (pageChange)="pageChanged($event)"
     ></pagination-controls>
