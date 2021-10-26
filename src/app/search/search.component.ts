@@ -9,13 +9,14 @@ export class SearchComponent implements OnInit{
 
   @Output() onClick: EventEmitter<string> = new EventEmitter();
 
-  @ViewChild('titleInput') inputRef: ElementRef
+  @ViewChild('titleInput', {static: true}) inputRef: ElementRef
 
   search: any;
-//(localStorage.getItem('search'))
+  value: string = localStorage.getItem('search')
 
   ngOnInit() {
-    //this.inputRef.nativeElement.attribute.value('1')
+    this.inputRef.nativeElement.value = this.value
+
   }
 
   onClickSearch() {
