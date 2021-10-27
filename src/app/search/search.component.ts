@@ -11,16 +11,18 @@ export class SearchComponent implements OnInit{
 
   @ViewChild('titleInput', {static: true}) inputRef: ElementRef
 
-  search: any;
-  value: string = localStorage.getItem('search')
+  public search: string;
+  private value: string = localStorage.getItem('search')
 
   ngOnInit() {
-    this.inputRef.nativeElement.value = this.value
-
+    this.search = this.value
   }
 
   onClickSearch() {
     this.onClick.emit(this.search)
+  }
 
+  onClickRemove() {
+    this.search = ''
   }
 }

@@ -1,13 +1,5 @@
 <div class="input-container">
-  <input
-    class="input"
-    type="text"
-    placeholder="Имя пользователя..."
-    [(ngModel)]="search"
-    autofocus="autofocus"
-    [defaultValue]="titleInput"
-    #titleInput
-
-  >
+  <input class="input" type="text" placeholder="Имя пользователя..." [(ngModel)]="search" autofocus="autofocus">
+  <span class="close" (click)="onClickRemove()">&#10006;</span>
   <button class="btn" (click)="onClickSearch()" >Найти</button>
 </div>
